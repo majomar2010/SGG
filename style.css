@@ -1,173 +1,212 @@
 /* ==========================================================================
-   VARIABLES DE DISEÑO (Manejadas dinámicamente para Modo Claro / Oscuro)
+   Variables de Tema (Paleta Pastel & Variantes Oscurecidas)
    ========================================================================== */
 :root {
-    /* Modo Claro por defecto */
-    --background-bg: #f4f6f9;
-    --card-bg: #ffffff;
-    --text-primary: #1a202c;
-    --text-secondary: #4a5568;
-    --border-color: #cbd5e0;
-    --primary-color: #3182ce;
-    --primary-hover: #2b6cb0;
-    --error-color: #e53e3e;
-    --error-bg: #fff5f5;
-    --success-color: #38a169;
+    /* MODO CLARO - Tonos Pastel */
+    --bg-primary: #fff5f7;        /* Fondo general rosa sutil */
+    --bg-card: #e6fffa;           /* Tarjeta celeste turquesa claro */
+    --bg-input: #ffffff;
+    --text-main: #2d3748;         /* Gris oscuro para legibilidad y contraste */
+    --text-muted: #4a5568;
+    --border-color: #b2f5ea;      /* Borde turquesa suave */
+    
+    /* Colores destacados */
+    --primary-color: #ffb6c1;     /* Rosa pastel para el botón */
+    --primary-hover: #ffa0b0;
+    --accent-color: #fef3c7;      /* Amarillo pastel */
+    
+    /* Estados de Feedback */
+    --error-bg: #ffefeb;
+    --error-text: #c53030;
     --success-bg: #f0fff4;
+    --success-text: #22543d;
 }
 
 [data-theme="dark"] {
-    /* Modo Oscuro */
-    --background-bg: #121212;
-    --card-bg: #1e1e1e;
-    --text-primary: #f5f5f5;
-    --text-secondary: #a0aec0;
-    --border-color: #4a5568;
-    --primary-color: #63b3ed;
-    --primary-hover: #4299e1;
-    --error-color: #fc8181;
-    --error-bg: #2d1f1f;
-    --success-color: #68d391;
-    --success-bg: #1f2d24;
+    /* MODO OSCURO - Tonos Pastel Oscurecidos Profundos */
+    --bg-primary: #1a0f12;        /* Rosa pastel extremadamente oscurecido */
+    --bg-card: #08211d;           /* Celeste turquesa claro oscurecido */
+    --bg-input: #142f2a;
+    --text-main: #e2e8f0;         /* Texto claro para contraste sobre fondo oscuro */
+    --text-muted: #a0aec0;
+    --border-color: #0c4a43;      /* Turquesa oscuro */
+    
+    /* Colores destacados oscurecidos */
+    --primary-color: #8c4350;     /* Rosa pastel oscurecido para botón */
+    --primary-hover: #ab5665;
+    --accent-color: #5c4d1a;      /* Amarillo pastel oscurecido */
+    
+    /* Estados de Feedback en Modo Oscuro */
+    --error-bg: #441d1d;
+    --error-text: #feb2b2;
+    --success-bg: #143324;
+    --success-text: #9ae6b4;
 }
 
 /* ==========================================================================
-   ESTILOS GENERALES
+   Estilos Base y Reset
    ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
 body {
-    background-color: var(--background-bg);
-    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.5rem 2rem;
+}
+
+/* Botón Switch de Temas */
+#theme-toggle {
+    background-color: var(--accent-color); /* Resalta en Amarillo Pastel */
+    color: var(--text-main);
+    border: 2px solid var(--border-color);
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.2s ease;
+}
+
+#theme-toggle:hover {
+    filter: brightness(0.9);
+    transform: scale(1.03);
+}
+
+/* ==========================================================================
+   Contenedor Principal y Tarjeta (Login Card)
+   ========================================================================== */
+.login-container {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-}
-
-/* Botón Switch de Tema */
-.theme-toggle {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: var(--card-bg);
-    border: 2px solid var(--border-color);
-    font-size: 1.5rem;
-    padding: 8px 12px;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-}
-
-.theme-toggle:focus {
-    outline: 3px solid var(--primary-color);
-}
-
-/* Card del Login */
-.login-container {
-    width: 100%;
-    max-width: 420px;
-    padding: 20px;
+    padding: 1.5rem;
 }
 
 .login-card {
-    background-color: var(--card-bg);
-    padding: 40px 30px;
-    border-radius: 8px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-    border: 1px solid var(--border-color);
+    background-color: var(--bg-card);
+    border: 2px solid var(--border-color);
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .login-card h2 {
-    margin-bottom: 10px;
+    margin-bottom: 0.5rem;
     font-size: 1.6rem;
     text-align: center;
+    font-weight: 800;
 }
 
 .login-card p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2.5rem;
     text-align: center;
-    margin-bottom: 30px;
 }
 
-/* Formularios */
+/* ==========================================================================
+   Elementos del Formulario
+   ========================================================================== */
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
+    margin-bottom: 0.6rem;
     font-size: 0.9rem;
+    font-weight: 700;
 }
 
 .form-group input {
     width: 100%;
-    padding: 12px;
+    padding: 0.85rem;
     border: 2px solid var(--border-color);
-    background-color: var(--card-bg);
-    color: var(--text-primary);
-    border-radius: 6px;
+    border-radius: 10px;
+    background-color: var(--bg-input);
+    color: var(--text-main);
     font-size: 1rem;
+    transition: border-color 0.2s, background-color 0.3s;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: var(--primary-color);
+    border-color: var(--primary-color); /* Foco resalta en Rosa */
 }
 
-/* Botones */
+/* Botón de Envío */
 .btn-submit {
     width: 100%;
-    padding: 12px;
+    padding: 0.9rem;
     background-color: var(--primary-color);
-    color: #ffffff;
+    color: var(--text-main); /* Cambia dinámicamente para cumplir WCAG */
     border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: bold;
+    border-radius: 10px;
+    font-size: 1.05rem;
+    font-weight: 700;
     cursor: pointer;
-    margin-top: 10px;
+    transition: background-color 0.2s, transform 0.1s;
+    margin-top: 1rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+[data-theme="dark"] .btn-submit {
+    color: #ffffff; /* Texto blanco en modo oscuro para el botón rosa oscuro */
 }
 
 .btn-submit:hover {
     background-color: var(--primary-hover);
 }
 
-.btn-submit:focus {
-    outline: 3px solid var(--text-primary);
+.btn-submit:active {
+    transform: scale(0.98);
 }
 
-/* Mensajes de Feedback */
-.message-box {
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 0.9rem;
-    margin-bottom: 20px;
-    font-weight: 500;
+/* ==========================================================================
+   Componentes de Alerta (Feedback Dinámico)
+   ========================================================================== */
+.alert {
+    padding: 0.85rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    margin-bottom: 1.25rem;
+    font-weight: 600;
     text-align: center;
+    border: 1px solid transparent;
+    animation: fadeIn 0.3s ease-in-out;
 }
 
-.message-box.error {
+.alert-error {
     background-color: var(--error-bg);
-    color: var(--error-color);
-    border: 1px solid var(--error-color);
+    color: var(--error-text);
+    border-color: var(--error-text);
 }
 
-.message-box.success {
+.alert-success {
     background-color: var(--success-bg);
-    color: var(--success-color);
-    border: 1px solid var(--success-color);
+    color: var(--success-text);
+    border-color: var(--success-text);
 }
 
-.hidden {
-    display: none !important;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
 }

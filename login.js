@@ -1,93 +1,76 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // ==========================================================================
-    // 1. USUARIOS DE PRUEBA (Requisito Obligatorio)
-    // ==========================================================================
+    // 1. Usuarios predeterminados de prueba (Principio ETC - Fácil de modificar)
     const MOCK_USERS = [
-        { username: "sebastian.astesana", password: "Password123" },
-        { username: "alumno.tecnica29", password: "Sgg2026_Project" }
+        { username: 'admin@sgg.com', password: 'password123' },
+        { username: 'user@sgg.com', password: 'user2026' }
     ];
 
-    // ==========================================================================
-    // 2. REFERENCIAS AL DOM
-    // ==========================================================================
+    // 2. Elementos del DOM
     const loginForm = document.getElementById('login-form');
     const usernameInput = document.getElementById('username');
     const passwordInput = document.getElementById('password');
-    const messageBox = document.getElementById('message-box');
-    const themeToggleBtn = document.getElementById('theme-toggle');
+    const messageContainer = document.getElementById('message-container');
+    const themeToggle = document.getElementById('theme-toggle');
 
-    // ==========================================================================
-    // 3. GESTIÓN DE TEMA (Modo Claro/Oscuro con Persistencia en LocalStorage)
-    // ==========================================================================
-    const currentTheme = localStorage.getItem('theme') || 'light';
-    document.documentElement.setAttribute('data-theme', currentTheme);
-    updateThemeIcon(currentTheme);
+    // 3. Inicialización y Persistencia del Tema (LocalStorage)
+    const savedTheme = localStorage.getItem('sgg-theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    renderThemeToggleText(savedTheme);
 
-    themeToggleBtn.addEventListener('click', () => {
-        let theme = document.documentElement.getAttribute('data-theme');
-        let newTheme = (theme === 'dark') ? 'light' : 'dark';
+    // Evento para cambiar de tema
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const targetTheme = (currentTheme === 'dark') ? 'light' : 'dark';
         
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme);
+        document.documentElement.setAttribute('data-theme', targetTheme);
+        localStorage.setItem('sgg-theme', targetTheme);
+        renderThemeToggleText(targetTheme);
     });
 
-    function updateThemeIcon(theme) {
-        themeToggleBtn.textContent = (theme === 'dark') ? '☀️' : '🌙';
+    function renderThemeToggleText(theme) {
+        themeToggle.textContent = (theme === 'dark') ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
     }
 
-    // ==========================================================================
-    // 4. LÓGICA DE VALIDACIÓN Y CONTROL DE ACCESO
-    // ==========================================================================
-    loginForm.addEventListener('submit', (e) => {
-        e.preventDefault(); // Evitamos la recarga de página por defecto
-
-        const usernameVal = usernameInput.value.trim();
-        const passwordVal = passwordInput.value.trim();
-
-        // Limpieza de estados anteriores del message-box
-        showMessage("", "hidden");
-
-        // Validación 1: Campos vacíos
-        if (!usernameVal || !passwordVal) {
-            showMessage("Por favor, complete todos los campos obligatorios.", "error");
-            return;
-        }
-
-        // Validación 2: Buscar si el usuario existe
-        const userFound = MOCK_USERS.find(user => user.username === usernameVal);
-
-        if (!userFound) {
-            showMessage("Error: El usuario ingresado no se encuentra registrado.", "error");
-            return;
-        }
-
-        // Validación 3: Validar contraseña correspondiente
-        if (userFound.password !== passwordVal) {
-            showMessage("Error: La contraseña ingresada es incorrecta.", "error");
-            return;
-        }
-
-        // Caso de Éxito: Credenciales Correctas
-        showMessage("¡Ingreso exitoso! Redireccionando al panel principal...", "success");
+    // 4. Función Centralizada de Notificaciones (Principio DRY)
+    function showFeedback(message, status) {
+        messageContainer.innerHTML = ''; // Limpiar estados previos
         
-        // Simulación de guardado de sesión
-        localStorage.setItem('sessionUser', userFound.username);
-        
-        // Deshabilitar formulario post-éxito
-        loginForm.querySelectorAll('input, button').forEach(el => el.disabled = true);
-    });
+        if (!message) return;
 
-    // Función auxiliar bajo el principio DRY para no repetir lógica de renderizado
-    function showMessage(text, type) {
-        messageBox.className = "message-box"; // Resetea clases
-        if (type === "hidden") {
-            messageBox.classList.add('hidden');
-            messageBox.textContent = "";
+        const alertElement = document.createElement('div');
+        alertElement.className = `alert alert-${status}`;
+        alertElement.textContent = message;
+        
+        messageContainer.appendChild(alertElement);
+    }
+
+    // 5. Manejo del Formulario e Intercepción del Submit
+    loginForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const usernameValue = usernameInput.value.trim();
+        const passwordValue = passwordInput.value.trim();
+
+        // Validación estructural: Campos Vacíos
+        if (usernameValue === '' || passwordValue === '') {
+            showFeedback('Por favor, complete todos los campos obligatorios.', 'error');
+            return;
+        }
+
+        // Buscar coincidencias dentro de los datos simulados
+        const matchedUser = MOCK_USERS.find(user => user.username === usernameValue);
+
+        if (!matchedUser) {
+            showFeedback('El usuario ingresado no se encuentra registrado.', 'error');
+        } else if (matchedUser.password !== passwordValue) {
+            showFeedback('Error: La contraseña ingresada es incorrecta.', 'error');
         } else {
-            messageBox.classList.add(type);
-            messageBox.textContent = text;
+            showFeedback('¡Inicio de sesión exitoso! Redireccionando...', 'success');
+            loginForm.reset();
+            
+            // Simulación de navegación exitosa post-login
+            /* setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500); */
         }
-    }
+    });
 });
