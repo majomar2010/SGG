@@ -1,0 +1,173 @@
+/* ==========================================================================
+   VARIABLES DE DISEÑO (Manejadas dinámicamente para Modo Claro / Oscuro)
+   ========================================================================== */
+:root {
+    /* Modo Claro por defecto */
+    --background-bg: #f4f6f9;
+    --card-bg: #ffffff;
+    --text-primary: #1a202c;
+    --text-secondary: #4a5568;
+    --border-color: #cbd5e0;
+    --primary-color: #3182ce;
+    --primary-hover: #2b6cb0;
+    --error-color: #e53e3e;
+    --error-bg: #fff5f5;
+    --success-color: #38a169;
+    --success-bg: #f0fff4;
+}
+
+[data-theme="dark"] {
+    /* Modo Oscuro */
+    --background-bg: #121212;
+    --card-bg: #1e1e1e;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a0aec0;
+    --border-color: #4a5568;
+    --primary-color: #63b3ed;
+    --primary-hover: #4299e1;
+    --error-color: #fc8181;
+    --error-bg: #2d1f1f;
+    --success-color: #68d391;
+    --success-bg: #1f2d24;
+}
+
+/* ==========================================================================
+   ESTILOS GENERALES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    background-color: var(--background-bg);
+    color: var(--text-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Botón Switch de Tema */
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: var(--card-bg);
+    border: 2px solid var(--border-color);
+    font-size: 1.5rem;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.theme-toggle:focus {
+    outline: 3px solid var(--primary-color);
+}
+
+/* Card del Login */
+.login-container {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+}
+
+.login-card {
+    background-color: var(--card-bg);
+    padding: 40px 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.login-card h2 {
+    margin-bottom: 10px;
+    font-size: 1.6rem;
+    text-align: center;
+}
+
+.login-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Formularios */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--border-color);
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* Botones */
+.btn-submit {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    background-color: var(--primary-hover);
+}
+
+.btn-submit:focus {
+    outline: 3px solid var(--text-primary);
+}
+
+/* Mensajes de Feedback */
+.message-box {
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.message-box.error {
+    background-color: var(--error-bg);
+    color: var(--error-color);
+    border: 1px solid var(--error-color);
+}
+
+.message-box.success {
+    background-color: var(--success-bg);
+    color: var(--success-color);
+    border: 1px solid var(--success-color);
+}
+
+.hidden {
+    display: none !important;
+}
