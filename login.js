@@ -1,76 +1,138 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
-    // 1. Usuarios predeterminados de prueba (Principio ETC - Fácil de modificar)
-    const MOCK_USERS = [
-        { username: 'admin@sgg.com', password: 'password123' },
-        { username: 'user@sgg.com', password: 'user2026' }
-    ];
+// ==========================================================================
+// 1. BASE DE DATOS DE USUARIOS (Requisito Obligatorio)
+// ==========================================================================
+const USERS_DATABASE = [
+    { username: "analistaQA", password: "password123", name: "Analista de Calidad" },
+    { username: "sebastian", password: "sggProyecto1", name: "José Sebastián" }
+];
 
-    // 2. Elementos del DOM
-    const loginForm = document.getElementById('login-form');
-    const usernameInput = document.getElementById('username');
-    const passwordInput = document.getElementById('password');
-    const messageContainer = document.getElementById('message-container');
-    const themeToggle = document.getElementById('theme-toggle');
+// ==========================================================================
+// 2. INTERRUPTOR DE PESTAÑAS (Login vs Registro)
+// ==========================================================================
+const tabLogin = document.getElementById('tab-login');
+const tabRegister = document.getElementById('tab-register');
+const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const messageBox = document.getElementById('form-message');
 
-    // 3. Inicialización y Persistencia del Tema (LocalStorage)
-    const savedTheme = localStorage.getItem('sgg-theme') || 'light';
-    document.documentElement.setAttribute('data-theme', savedTheme);
-    renderThemeToggleText(savedTheme);
+function clearMessages() {
+    messageBox.className = "message-box";
+    messageBox.textContent = "";
+}
 
-    // Evento para cambiar de tema
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const targetTheme = (currentTheme === 'dark') ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', targetTheme);
-        localStorage.setItem('sgg-theme', targetTheme);
-        renderThemeToggleText(targetTheme);
-    });
-
-    function renderThemeToggleText(theme) {
-        themeToggle.textContent = (theme === 'dark') ? '☀️ Modo Claro' : '🌙 Modo Oscuro';
-    }
-
-    // 4. Función Centralizada de Notificaciones (Principio DRY)
-    function showFeedback(message, status) {
-        messageContainer.innerHTML = ''; // Limpiar estados previos
-        
-        if (!message) return;
-
-        const alertElement = document.createElement('div');
-        alertElement.className = `alert alert-${status}`;
-        alertElement.textContent = message;
-        
-        messageContainer.appendChild(alertElement);
-    }
-
-    // 5. Manejo del Formulario e Intercepción del Submit
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const usernameValue = usernameInput.value.trim();
-        const passwordValue = passwordInput.value.trim();
-
-        // Validación estructural: Campos Vacíos
-        if (usernameValue === '' || passwordValue === '') {
-            showFeedback('Por favor, complete todos los campos obligatorios.', 'error');
-            return;
-        }
-
-        // Buscar coincidencias dentro de los datos simulados
-        const matchedUser = MOCK_USERS.find(user => user.username === usernameValue);
-
-        if (!matchedUser) {
-            showFeedback('El usuario ingresado no se encuentra registrado.', 'error');
-        } else if (matchedUser.password !== passwordValue) {
-            showFeedback('Error: La contraseña ingresada es incorrecta.', 'error');
-        } else {
-            showFeedback('¡Inicio de sesión exitoso! Redireccionando...', 'success');
-            loginForm.reset();
-            
-            // Simulación de navegación exitosa post-login
-            /* setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500); */
-        }
-    });
+tabLogin.addEventListener('click', () => {
+    tabLogin.classList.add('active');
+    tabRegister.classList.remove('active');
+    loginForm.classList.remove('hidden');
+    registerForm.classList.add('hidden');
+    clearMessages();
 });
+
+tabRegister.addEventListener('click', () => {
+    tabRegister.classList.add('active');
+    tabLogin.classList.remove('active');
+    registerForm.classList.remove('hidden');
+    loginForm.classList.add('hidden');
+    clearMessages();
+});
+
+// ==========================================================================
+// 3. PROCESAMIENTO DE INICIO DE SESIÓN
+// ==========================================================================
+loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearMessages();
+    
+    const userIn = document.getElementById('username').value.trim();
+    const passIn = document.getElementById('password').value.trim();
+    
+    if (!userIn || !passIn) {
+        showFeedback("error", "Por favor, completa todos los campos.");
+        return;
+    }
+
+    const account = USERS_DATABASE.find(u => u.username.toLowerCase() === userIn.toLowerCase());
+
+    if (!account) {
+        showFeedback("error", "El usuario no está registrado. ¡Crea una cuenta al lado!");
+        return;
+    }
+
+    if (account.password !== passIn) {
+        showFeedback("error", "Contraseña incorrecta.");
+        return;
+    }
+
+    showFeedback("success", `¡Bienvenido de vuelta, ${account.name}!`);
+});
+
+// ==========================================================================
+// 4. PROCESAMIENTO DE NUEVOS REGISTROS
+// ==========================================================================
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearMessages();
+    
+    const regName = document.getElementById('reg-name').value.trim();
+    const regUser = document.getElementById('reg-username').value.trim();
+    const regPass = document.getElementById('reg-password').value.trim();
+    
+    if (!regName || !regUser || !regPass) {
+        showFeedback("error", "Todos los campos de registro son obligatorios.");
+        return;
+    }
+    
+    if (regPass.length < 6) {
+        showFeedback("error", "La contraseña debe tener al menos 6 caracteres.");
+        return;
+    }
+    
+    const userExists = USERS_DATABASE.some(u => u.username.toLowerCase() === regUser.toLowerCase());
+    if (userExists) {
+        showFeedback("error", "Ese nombre de usuario ya está tomado.");
+        return;
+    }
+    
+    USERS_DATABASE.push({ username: regUser, password: regPass, name: regName });
+    
+    showFeedback("success", "¡Cuenta creada con éxito! Ya podés iniciar sesión.");
+    registerForm.reset();
+    
+    setTimeout(() => { tabLogin.click(); }, 1500);
+});
+
+function showFeedback(type, text) {
+    messageBox.textContent = text;
+    messageBox.className = `message-box ${type}`;
+}
+
+// ==========================================================================
+// 5. CONTROL DEL MODO OSCURO (Persistente en LocalStorage)
+// ==========================================================================
+const themeToggleBtn = document.getElementById('theme-toggle');
+const savedTheme = localStorage.getItem('theme');
+
+if (savedTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    updateThemeButton(true);
+}
+
+themeToggleBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        updateThemeButton(false);
+    } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        updateThemeButton(true);
+    }
+});
+
+function updateThemeButton(isDark) {
+    themeToggleBtn.setAttribute('aria-pressed', isDark);
+    themeToggleBtn.innerHTML = isDark ? 
+        '<span class="icon" aria-hidden="true">☀️</span> MODO CLARO' : 
+        '<span class="icon" aria-hidden="true">🌙</span> MODO OSCURO';
+}
