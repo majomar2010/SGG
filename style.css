@@ -1,212 +1,261 @@
-/* ==========================================================================
-   Variables de Tema (Paleta Pastel & Variantes Oscurecidas)
-   ========================================================================== */
 :root {
-    /* MODO CLARO - Tonos Pastel */
-    --bg-primary: #fff5f7;        /* Fondo general rosa sutil */
-    --bg-card: #e6fffa;           /* Tarjeta celeste turquesa claro */
-    --bg-input: #ffffff;
-    --text-main: #2d3748;         /* Gris oscuro para legibilidad y contraste */
-    --text-muted: #4a5568;
-    --border-color: #b2f5ea;      /* Borde turquesa suave */
+    /* MODO CLARO - Tus colores pastel exactos */
+    --bg-gradient-1: #fbcfe8;     /* Fucsia Claro */
+    --bg-gradient-2: #fef08a;     /* Amarillo Bebé */
+    --bg-gradient-3: #99f6e4;     /* Turquesa Pastel */
     
-    /* Colores destacados */
-    --primary-color: #ffb6c1;     /* Rosa pastel para el botón */
-    --primary-hover: #ffa0b0;
-    --accent-color: #fef3c7;      /* Amarillo pastel */
+    --card-bg: rgba(255, 255, 255, 0.85); /* Efecto cristal */
+    --text-main: #1f1f22;
+    --text-muted: #6b7280;
     
-    /* Estados de Feedback */
-    --error-bg: #ffefeb;
-    --error-text: #c53030;
-    --success-bg: #f0fff4;
-    --success-text: #22543d;
+    --action-color: #0d9488;       /* Turquesa de alto contraste para textos y botones */
+    --action-hover: #115e59;
+    --input-bg: #ffffff;
+    --border-color: #e5e7eb;
+    
+    --error-bg: #fef2f2;
+    --error-text: #991b1b;
+    --success-bg: #ecfdf5;
+    --success-text: #065f46;
 }
 
 [data-theme="dark"] {
-    /* MODO OSCURO - Tonos Pastel Oscurecidos Profundos */
-    --bg-primary: #1a0f12;        /* Rosa pastel extremadamente oscurecido */
-    --bg-card: #08211d;           /* Celeste turquesa claro oscurecido */
-    --bg-input: #142f2a;
-    --text-main: #e2e8f0;         /* Texto claro para contraste sobre fondo oscuro */
-    --text-muted: #a0aec0;
-    --border-color: #0c4a43;      /* Turquesa oscuro */
+    /* MODO OSCURO - Tonos oscuros profundos y modernos */
+    --bg-gradient-1: #4c0519;     /* Fucsia Oscuro */
+    --bg-gradient-2: #451a03;     /* Amarillo/Marrón Oscuro */
+    --bg-gradient-3: #115e59;     /* Turquesa Oscuro */
     
-    /* Colores destacados oscurecidos */
-    --primary-color: #8c4350;     /* Rosa pastel oscurecido para botón */
-    --primary-hover: #ab5665;
-    --accent-color: #5c4d1a;      /* Amarillo pastel oscurecido */
+    --card-bg: rgba(24, 24, 27, 0.85);
+    --text-main: #f4f4f5;
+    --text-muted: #a1a1aa;
     
-    /* Estados de Feedback en Modo Oscuro */
-    --error-bg: #441d1d;
-    --error-text: #feb2b2;
-    --success-bg: #143324;
-    --success-text: #9ae6b4;
+    --action-color: #2dd4bf;     /* Turquesa neón/brillante para contraste nocturno */
+    --action-hover: #14b8a6;
+    --input-bg: #09090b;
+    --border-color: #27272a;
+    
+    --error-bg: #450a0a;
+    --error-text: #fca5a5;
+    --success-bg: #064e3b;
+    --success-text: #34d399;
 }
 
 /* ==========================================================================
-   Estilos Base y Reset
+   ESTILOS GENERALES Y MODERNIOS
    ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+    letter-spacing: -0.01em;
+    transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                color 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-main);
+    background-color: #09090b;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 header {
+    width: 100%;
     display: flex;
     justify-content: flex-end;
     padding: 1.5rem 2rem;
+    position: absolute;
+    z-index: 10;
 }
 
-/* Botón Switch de Temas */
-#theme-toggle {
-    background-color: var(--accent-color); /* Resalta en Amarillo Pastel */
+/* Botón Dark Mode Moderno */
+.theme-btn {
+    background-color: var(--card-bg);
     color: var(--text-main);
-    border: 2px solid var(--border-color);
+    border: 1px solid var(--border-color);
     padding: 0.6rem 1.2rem;
-    border-radius: 20px;
+    border-radius: 9999px; /* Cápsula perfecta */
     cursor: pointer;
+    font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.5px;
-    transition: all 0.2s ease;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
 }
 
-#theme-toggle:hover {
-    filter: brightness(0.9);
-    transform: scale(1.03);
+.theme-btn:hover {
+    transform: translateY(-1px);
+    border-color: var(--action-color);
 }
 
-/* ==========================================================================
-   Contenedor Principal y Tarjeta (Login Card)
-   ========================================================================== */
+/* Contenedor Principal Animado con tu paleta */
 .login-container {
     flex: 1;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 1.5rem;
+    background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 50%, var(--bg-gradient-3) 100%);
+    background-size: 200% 200%;
+    animation: gradientAnimation 15s ease infinite;
 }
 
-.login-card {
-    background-color: var(--bg-card);
-    border: 2px solid var(--border-color);
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Tarjeta Glassmorphism */
+.card {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     padding: 3rem 2.5rem;
-    border-radius: 20px;
+    border-radius: 24px; /* Súper redondeado moderno */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
     width: 100%;
-    max-width: 440px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    max-width: 410px;
+    position: relative;
 }
 
-.login-card h2 {
-    margin-bottom: 0.5rem;
-    font-size: 1.6rem;
-    text-align: center;
+h1 {
+    font-size: 1.35rem;
     font-weight: 800;
-}
-
-.login-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    margin-bottom: 2.5rem;
     text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-main);
 }
 
-/* ==========================================================================
-   Elementos del Formulario
-   ========================================================================== */
+/* Selector de Pestañas Tipo Píldora (Modern App Style) */
+.tab-container {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 0.25rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+[data-theme="dark"] .tab-container {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.tab-btn.active {
+    background-color: var(--input-bg);
+    color: var(--action-color);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Manejo de inputs limpios (Minimalistas) */
 .form-group {
     margin-bottom: 1.5rem;
 }
 
-.form-group label {
+label {
     display: block;
-    margin-bottom: 0.6rem;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    color: var(--text-muted);
 }
 
-.form-group input {
+input {
     width: 100%;
-    padding: 0.85rem;
-    border: 2px solid var(--border-color);
-    border-radius: 10px;
-    background-color: var(--bg-input);
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background-color: var(--input-bg);
     color: var(--text-main);
     font-size: 1rem;
-    transition: border-color 0.2s, background-color 0.3s;
+    transition: all 0.2s ease;
 }
 
-.form-group input:focus {
+input:focus {
     outline: none;
-    border-color: var(--primary-color); /* Foco resalta en Rosa */
+    border-color: var(--action-color);
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15);
 }
 
-/* Botón de Envío */
-.btn-submit {
+[data-theme="dark"] input:focus {
+    box-shadow: 0 0 0 4px rgba(45, 212, 191, 0.15);
+}
+
+/* Botón de acción con elevación hávica */
+.submit-btn {
     width: 100%;
     padding: 0.9rem;
-    background-color: var(--primary-color);
-    color: var(--text-main); /* Cambia dinámicamente para cumplir WCAG */
+    background-color: var(--action-color);
+    color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 1.05rem;
+    border-radius: 12px;
+    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    margin-top: 1rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    margin-top: 0.5rem;
+    box-shadow: 0 4px 12px rgba(13, 148, 136, 0.3);
+    transition: all 0.2s ease;
 }
 
-[data-theme="dark"] .btn-submit {
-    color: #ffffff; /* Texto blanco en modo oscuro para el botón rosa oscuro */
+[data-theme="dark"] .submit-btn {
+    box-shadow: 0 4px 12px rgba(45, 212, 191, 0.2);
 }
 
-.btn-submit:hover {
-    background-color: var(--primary-hover);
+.submit-btn:hover {
+    background-color: var(--action-hover);
+    transform: translateY(-1px);
 }
 
-.btn-submit:active {
-    transform: scale(0.98);
+.submit-btn:active {
+    transform: translateY(1px);
 }
 
-/* ==========================================================================
-   Componentes de Alerta (Feedback Dinámico)
-   ========================================================================== */
-.alert {
-    padding: 0.85rem;
-    border-radius: 10px;
-    font-size: 0.95rem;
-    margin-bottom: 1.25rem;
-    font-weight: 600;
-    text-align: center;
-    border: 1px solid transparent;
-    animation: fadeIn 0.3s ease-in-out;
+/* Animaciones de desvanecimiento suave */
+.form-wrapper {
+    position: relative;
 }
 
-.alert-error {
-    background-color: var(--error-bg);
-    color: var(--error-text);
-    border-color: var(--error-text);
+form {
+    animation: fadeIn 0.4s ease forwards;
 }
 
-.alert-success {
-    background-color: var(--success-bg);
-    color: var(--success-text);
-    border-color: var(--success-text);
+.hidden {
+    display: none !important;
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+/* Caja de mensajes moderna estilo Toast */
+.message-box {
+    margin-top: 1.5rem;
+    padding: 0.85rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    display: none;
+    font-weight: 600;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.message-box.error { display: block; background-color: var(--error-bg); color: var(--error-text); }
+.message-box.success { display: block; background-color: var(--success-bg); color: var(--success-text); }
