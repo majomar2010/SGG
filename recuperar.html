@@ -7,31 +7,41 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
     <header>
         <button id="theme-toggle" class="theme-btn">🌙 Modo Oscuro</button>
     </header>
+
     <main class="card">
         <h1>Restablecer Clave</h1>
         <h2>Actualiza tus credenciales corporativas</h2>
+        
         <form id="recover-form" novalidate>
             <div class="form-group">
                 <label for="rec-email">Ingresa tu Correo</label>
-                <input type="email" id="rec-email" required>
+                <div class="input-wrapper">
+                    <input type="email" id="rec-email" required placeholder="ejemplo@empresa.com">
+                </div>
             </div>
+            
             <div class="form-group">
                 <label for="rec-pass">Nueva Contraseña</label>
                 <div class="input-wrapper">
-                    <input type="password" id="rec-pass" required>
-                    <button type="button" class="toggle-password" aria-label="Ver">🙈</button>
+                    <input type="password" id="rec-pass" required placeholder="••••••••">
+                    <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña">🙈</button>
                 </div>
             </div>
+            
             <div id="form-message" class="message-box" aria-live="polite"></div>
+            
             <button type="submit" class="submit-btn">Actualizar Contraseña</button>
         </form>
+        
         <div class="login-links">
             <a href="index.html">Volver al <span>Inicio de Sesión</span></a>
         </div>
     </main>
+
     <script src="js/theme.js"></script>
     <script src="js/recuperar.js"></script>
 </body>
