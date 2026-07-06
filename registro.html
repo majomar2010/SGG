@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGG - Registro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <button id="theme-toggle" class="theme-btn">🌙 Modo Oscuro</button>
+    </header>
+    <main class="card">
+        <h1>Crear Cuenta</h1>
+        <h2>Completa tus datos para el SGG</h2>
+        <form id="register-form" novalidate>
+            <div class="form-group">
+                <label for="reg-name">Nombre/s</label>
+                <input type="text" id="reg-name" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-lastname">Apellido/s</label>
+                <input type="text" id="reg-lastname" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-date">Fecha de Nacimiento</label>
+                <input type="date" id="reg-date" required>
+            </div>
+            <div class="form-group">
+                <label for="reg-email">Correo Corporativo</label>
+                <input type="email" id="reg-email" required placeholder="usuario@empresa.com">
+            </div>
+            <div class="form-group">
+                <label for="reg-pass">Contraseña</label>
+                <div class="input-wrapper">
+                    <input type="password" id="reg-pass" required>
+                    <button type="button" class="toggle-password" aria-label="Ver">🙈</button>
+                </div>
+                <ul class="requirements-list" id="req-list">
+                    <li id="req-len">❌ Mínimo 8 caracteres</li>
+                    <li id="req-may">❌ Al menos 1 Mayúscula</li>
+                    <li id="req-min">❌ Al menos 1 Minúscula</li>
+                    <li id="req-num">❌ Al menos 1 Número</li>
+                    <li id="req-esp">❌ Al menos 1 Carácter especial</li>
+                </ul>
+            </div>
+            <div class="form-group">
+                <label for="reg-pass2">Repetir Contraseña</label>
+                <div class="input-wrapper">
+                    <input type="password" id="reg-pass2" required>
+                    <button type="button" class="toggle-password" aria-label="Ver">🙈</button>
+                </div>
+            </div>
+            <div id="form-message" class="message-box" aria-live="polite"></div>
+            <button type="submit" id="reg-submit-btn" class="submit-btn" disabled>Registrarse</button>
+        </form>
+        <div class="login-links">
+            <a href="index.html">¿Ya tenés cuenta? <span>Iniciá Sesión</span></a>
+        </div>
+    </main>
+    <script src="js/theme.js"></script>
+    <script src="js/registro.js"></script>
+</body>
+</html>

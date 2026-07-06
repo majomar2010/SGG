@@ -1,0 +1,206 @@
+:root {
+    /* MODO CLARO - Pasteles exactos pedidos */
+    --color-fucsia: #ffafcc;     /* Rosa claro */
+    --color-turquesa: #b8e0d2;   /* Celeste claro / Turquesa */
+    --color-amarillo: #fdffb6;   /* Amarillo claro */
+    
+    --bg-main: #faf9f6;
+    --card-bg: #ffffff;
+    --text-main: #232326;
+    --text-muted: #6b7280;
+    
+    --action-color: #0d9488;
+    --action-hover: #115e59;
+    --border-color: #e5e7eb;
+    
+    --error-bg: #fef2f2;
+    --error-text: #991b1b;
+    --success-bg: #ecfdf5;
+    --success-text: #065f46;
+}
+
+[data-theme="dark"] {
+    /* MODO OSCURO - Tonos oscuros profundos y adecuados */
+    --color-fucsia: #4c1d2f;     /* Rosa/Fucsia oscuro */
+    --color-turquesa: #114b43;   /* Celeste/Turquesa oscuro */
+    --color-amarillo: #3a341c;   /* Amarillo/Marrón apagado */
+    
+    --bg-main: #121214;
+    --card-bg: #1c1c1f;
+    --text-main: #f4f4f5;
+    --text-muted: #a1a1aa;
+    
+    --action-color: #2dd4bf;
+    --action-hover: #5eead4;
+    --border-color: #27272a;
+    
+    --error-bg: #450a0a;
+    --error-text: #fca5a5;
+    --success-bg: #064e3b;
+    --success-text: #34d399;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--color-fucsia) 0%, var(--color-amarillo) 50%, var(--color-turquesa) 100%);
+    background-attachment: fixed;
+    padding: 2rem 1rem;
+}
+
+header {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.theme-btn {
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    padding: 0.5rem 1.2rem;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.card {
+    background-color: var(--card-bg);
+    padding: 2.5rem 2rem;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 400px;
+}
+
+h1, h2 { text-align: center; }
+h1 { font-size: 1.35rem; font-weight: 800; margin-bottom: 0.4rem; }
+h2 { font-size: 0.9rem; font-weight: 500; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+.form-group {
+    margin-bottom: 1.25rem;
+    position: relative;
+}
+
+label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--action-color);
+    box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+/* Ocultar/Mostrar Clave */
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    padding: 0.2rem;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 0.85rem;
+    background-color: var(--action-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.submit-btn:disabled {
+    background-color: var(--border-color);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.login-links {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-align: center;
+}
+
+.login-links a {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-decoration: none;
+}
+
+.login-links a:hover span, .login-links a:hover { color: var(--action-color); text-decoration: underline; }
+.login-links a span { color: var(--action-color); font-weight: 700; }
+
+.message-box {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    display: none;
+    font-weight: 600;
+    text-align: center;
+}
+.message-box.error { display: block; background-color: var(--error-bg); color: var(--error-text); }
+.message-box.success { display: block; background-color: var(--success-bg); color: var(--success-text); }
+
+/* Requisitos de Contraseña en tiempo real */
+.requirements-list {
+    margin-top: 0.75rem;
+    list-style: none;
+    font-size: 0.8rem;
+}
+.requirements-list li {
+    color: #ef4444;
+    margin-bottom: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.requirements-list li.valid {
+    color: #10b981;
+}
